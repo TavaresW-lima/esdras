@@ -17,7 +17,7 @@ export class ColetorComponent implements OnInit {
     nome: null,
     tipo: 'MEMBRO BRASIL'
   }
-
+ 
   constructor() { }
 
   ngOnInit(): void {
