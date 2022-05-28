@@ -1,0 +1,46 @@
+<ng-container *ngIf="nomeList">
+    <div class="w-full flex items-end justify-between">
+        <div></div>
+        <div class="flex items-end w-3/5 justify-end">
+            <div class="mr-4 w-1/2">
+                <label class="flex items-center relative" for="nomeSearch">
+                    <fa-icon class="absolute left-px text-zinc-400" [icon]="searchLens"></fa-icon>
+                    <input 
+                        [ngModel]="nomeFilter"
+                        (ngModelChange)="onFilterChange($event)"
+                        class="bg-transparent mt-0 w-full pt-0 pb-1 pl-5 border-0 border-b-2 border-zinc-400 focus:border-b-3 focus:border-sky-500 focus:ring-0"
+                        type="text" 
+                        name="nomeSearch" 
+                        id="nome"
+                        required
+                        placeholder="Pesquisar..."
+                    />
+                </label>
+            </div>
+            <button 
+                class="text-sm px-2 py-1 cursor-pointer border border-zinc-500 text-zinc-500
+                    hover:border-sky-500 active:text-sky-600 active:border-sky-600 
+                    hover:bg-sky-100"
+                (click)="exportarPDF()"
+            >
+                <fa-icon [icon]="pdf"></fa-icon>
+                Exportar Lista
+            </button>
+        </div>
+    </div>
+    <ag-grid-angular
+        style="width:100%"
+        domLayout="autoHeight"
+        class="ag-theme-alpine mt-2"
+        [overlayNoRowsTemplate]="'Nenhum nome na lista'"
+        [columnDefs]="columnDefs"
+        [rowData]="nomeList"
+        [animateRows]="true"
+        [getRowId]="getRowId"
+        [isExternalFilterPresent]="isExternalFilterPresent"
+        [doesExternalFilterPass]="doesExternalFilterPass"
+        [context]="gridContext"
+        [rowSelection]="'multiple'"
+        (gridReady)="onGridReady($event)"
+    ></ag-grid-angular>
+</ng-container>
