@@ -20,6 +20,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 })
 export class ListaEspectadoresComponent implements AgGridUser {
     @Input() nomeList: InfoEspectador[] = [];
+
 		@Output() nomeListChange: EventEmitter<InfoEspectador[]> = new EventEmitter<InfoEspectador[]>();
 
     public pdf = faFilePdf;
@@ -64,10 +65,17 @@ export class ListaEspectadoresComponent implements AgGridUser {
             strategy.setDispositivosOnline(header.dispositivos);
             strategy.setPessoasOnline(header.pessoas);
             strategy.setPessoasTemplo(header.pessoasTemplo);
+            strategy.setHorarioDe(header.de);
+            strategy.setHorarioAte(header.ate);
             this.pdfUtilService.setStrategy(strategy);
             this.pdfUtilService.geraPDF().open();
           })
           .catch(() => {});
+    }
+
+    public onListaUpload(lista: File) {
+      const reader = new FileReader();
+      reader.readAsText(lista);
     }
 
     public onFilterChange($event: string) {
@@ -76,7 +84,6 @@ export class ListaEspectadoresComponent implements AgGridUser {
     }
 
     public isExternalFilterPresent = (): boolean => {
-      debugger;
       return this.nomeFilter != undefined && this.nomeFilter.length > 0;
     }
 

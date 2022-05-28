@@ -10,6 +10,8 @@ import { NomeacaoEspectadorCellRenderer } from './lista-espectadores/ag-grid/nom
 import { PDFUtilService } from '../shared/pdf/pdf-util-service.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalHeaderListaComponent } from './modal-header-lista/modal-header.lista.component';
+import { SharedModule } from '../shared/shared.module';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,9 @@ import { ModalHeaderListaComponent } from './modal-header-lista/modal-header.lis
         FormsModule,
         AgGridModule,
         NgbModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        SharedModule,
+        ComponentsModule
     ],
     exports: [
         ColetorComponent

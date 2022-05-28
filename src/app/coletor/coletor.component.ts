@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ColDef } from 'ag-grid-community';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { InfoEspectador, TipoEspectador } from '../model/info-espectador';
 
 @Component({
@@ -9,12 +8,9 @@ import { InfoEspectador, TipoEspectador } from '../model/info-espectador';
 })
 export class ColetorComponent implements OnInit {
 
-  public nomeList: InfoEspectador[] = [
-    new InfoEspectador('William Tavares', 'Duque de Caxias'),
-    new InfoEspectador('Irmão Gringo', 'França', 'MEMBRO EXTERIOR'),
-    new InfoEspectador('Pastor tal', 'Outro lugar', 'PASTOR'),
-    new InfoEspectador('Missionário Tal', 'Ainda Outro Lugar', 'MISSIONARIO')
-  ];
+  @ViewChild('inputNome') public inputNome: ElementRef<HTMLInputElement>;
+
+  public nomeList: InfoEspectador[] = [];
 
   public form: Partial<InfoEspectador> = {
     localidade: null,
@@ -43,6 +39,7 @@ export class ColetorComponent implements OnInit {
     this.form.localidade = null;
     this.form.nome = null;
     this.form.tipo = 'MEMBRO BRASIL';
+    this.inputNome.nativeElement.focus();
   }
 
 }

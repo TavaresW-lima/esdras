@@ -8,14 +8,21 @@ import { DadosHeader } from './dados-header';
 export class ModalHeaderListaComponent {
 
     public formHeader: Partial<DadosHeader> = {
-        dispositivos: 0,
-        pessoas: 0,
-        pessoasTemplo: 0
+        dispositivos: undefined,
+        pessoas: undefined,
+        pessoasTemplo: undefined,
+        de: undefined,
+        ate: undefined
     }
 
     constructor(
         public activeModal: NgbActiveModal
-    ) {}
+    ) {
+        const now = new Date();
+        let hours = String(now.getHours()).padStart(2, '0');
+        let minutes = String(now.getMinutes()).padStart(2, '0');
+        this.formHeader.ate = `${hours}:${minutes}`
+    }
 
     public returnHeader() {
         this.activeModal.close(this.formHeader);

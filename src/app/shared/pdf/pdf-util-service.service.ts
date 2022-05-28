@@ -27,7 +27,7 @@ export class PDFUtilService {
             footer: this.pdfMakingStrategy.getFooter,
             pageSize: 'A4',
             pageOrientation: 'portrait',
-            pageMargins: [20, 10, 20, 10],
+            pageMargins: [20, 40, 20, 24],
             content: this.pdfMakingStrategy.getContent()
         }
     }
