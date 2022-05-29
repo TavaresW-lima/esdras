@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ColDef, ColumnApi, GetRowIdParams, GridApi, GridOptions, GridReadyEvent, RowNode } from 'ag-grid-community';
 import { AgGridUser } from '../../model/base/ag-grid-user';
 import { InfoEspectador, TipoEspectador } from '../../model/info-espectador';
@@ -107,7 +107,6 @@ export class ListaEspectadoresComponent implements AgGridUser {
         return false;
       }
     }
-
 }
 
 const colDef: ColDef[] = [

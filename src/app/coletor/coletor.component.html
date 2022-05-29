@@ -1,11 +1,11 @@
 <form #formEspectador="ngForm" novalidate>
-    <div class="container flex items-end justify-start gap-x-3">
+    <div class="container flex items-end justify-start gap-x-3 z-10">
         <div class="w-5/12">
-            <label class="w-full mx-2" for="nome">
+            <label class="w-full mx-2 text-slate-50" for="nome">
                 <span class="block mb-0">Nome</span>
                 <input 
                     [(ngModel)]="form.nome"
-                    class="bg-transparent mt-0 w-full pt-0 pb-1 pl-1 border-0 border-b-2 border-zinc-400 focus:border-b-3 focus:border-sky-500 focus:ring-0"
+                    class="bg-transparent mt-0 w-full pt-0 pb-1 pl-1 border-0 border-b-2 border-slate-50 focus:border-b-3 focus:border-sky-500 focus:ring-0 text-slate-50"
                     type="text" 
                     name="nome" 
                     id="nome"
@@ -16,11 +16,11 @@
             </label>
         </div>
         <div class="w-3/12">
-            <label for="local">
+            <label for="local" class="text-slate-50">
                 <span class="block mb-0">Local</span>
                 <input 
                     [(ngModel)]="form.localidade"
-                    class="bg-transparent mt-0 w-full pt-0 pb-1 pl-1 border-0 border-b-2 border-zinc-400 focus:border-b-3 focus:border-sky-500 focus:ring-0"
+                    class="bg-transparent mt-0 w-full pt-0 pb-1 pl-1 border-0 border-b-2 border-slate-50 focus:border-b-3 focus:border-sky-500 focus:ring-0 text-slate-50"
                     type="text" 
                     name="local" 
                     id="local"
@@ -30,24 +30,26 @@
         </div>
         <div class="w-3/12">
             <label for="tipo">
-                <span class="block mb-0">Tipo</span>
+                <span class="block mb-0 text-slate-50">Tipo</span>
                 <select
                     name="tipo" 
-                    class="bg-transparent mt-0 w-full pt-0 pb-1 pl-1 border-0 border-b-2 border-zinc-400 focus:border-b-3 focus:border-sky-500 focus:ring-0"
+                    class="bg-transparent mt-0 w-full pt-0 pb-1 pl-1 border-0 border-b-2 border-slate-50 focus:border-b-3 focus:border-sky-500 focus:ring-0 text-slate-50"
                     [(ngModel)]="form.tipo"
                 >
-                    <option [value]="'MEMBRO BRASIL'">Membro</option>
-                    <option [value]="'MEMBRO EXTERIOR'">Exterior</option>
-                    <option [value]="'PASTOR'">Pastor</option>
-                    <option [value]="'MISSIONARIO'">Missionário</option>
+                    <option class="text-zinc-800" [value]="'MEMBRO BRASIL'">Membro</option>
+                    <option class="text-zinc-800" [value]="'MEMBRO EXTERIOR'">Exterior</option>
+                    <option class="text-zinc-800" [value]="'PASTOR'">Pastor</option>
+                    <option class="text-zinc-800" [value]="'MISSIONARIO'">Missionário</option>
                 </select>
             </label>
         </div>
         <div class="w-1/12 flex justify-end">
             <button
                 type="submit"
-                class="px-4 py-2 border-2 cursor-pointer border-zinc-500 text-zinc-500 font-bold hover:border-sky-500 hover:text-sky-500 hover:bg-sky-100 
-                       active:text-sky-600 active:border-sky-600 disabled:text-zinc-400 disabled:border-zinc-400 disabled:cursor-not-allowed disabled:bg-transparent"
+                class="px-4 py-2 border-2 cursor-pointer border-slate-50 text-slate-50 font-bold 
+                       hover:border-sky-500 hover:text-sky-500 hover:bg-slate-50 
+                       active:text-sky-600 active:border-sky-600 
+                       disabled:text-slate-50/50 disabled:border-slate-50/50 disabled:cursor-not-allowed disabled:bg-transparent"
                 [disabled]="!formEspectador.form.valid" 
                 (click)="add()">
                 Adicionar
