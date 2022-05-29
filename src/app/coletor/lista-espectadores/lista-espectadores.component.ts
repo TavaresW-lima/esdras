@@ -13,6 +13,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalHeaderListaComponent } from '../modal-header-lista/modal-header.lista.component';
 import { DadosHeader } from '../modal-header-lista/dados-header';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { ListaReaderUtilService } from './lista-reader.util';
+import { ModalConfirmacaoUpload } from '../modal-confirmacao-upload/modal-confirmacao-upload.component';
 
 @Component({
     selector: 'ui-lista-espectadores',
@@ -35,7 +37,8 @@ export class ListaEspectadoresComponent implements AgGridUser {
 
     constructor(
       private pdfUtilService: PDFUtilService,
-      private modalService: NgbModal
+      private modalService: NgbModal,
+      private readerService: ListaReaderUtilService
     ) {
       this.nomeFilter = '';
     }
@@ -73,9 +76,17 @@ export class ListaEspectadoresComponent implements AgGridUser {
           .catch(() => {});
     }
 
-    public onListaUpload(lista: File) {
-      const reader = new FileReader();
-      reader.readAsText(lista);
+    public onListaUpload(lista: InfoEspectador[]) {
+      if(this.nomeList.length > 0) {
+        this.modalService
+            .open(ModalConfirmacaoUpload)
+            .result
+            .then(() => {
+              this.nomeList = lista;
+            })
+      } else {
+        this.nomeList = lista;
+      }
     }
 
     public onFilterChange($event: string) {

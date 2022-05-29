@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
+import { InfoEspectador } from 'src/app/model/info-espectador';
+import { ListaReaderUtilService } from '../../../coletor/lista-espectadores/lista-reader.util';
 
 @Component({
     selector: 'ui-upload-file-button',
@@ -26,14 +28,31 @@ import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 export class UploadFileButton {
     public upload = faFileUpload;
 
+    constructor(
+        private readerUtil: ListaReaderUtilService
+    ) {}
+
     @Input() accept: string = 'text/plain';
-    @Output() onUpload: EventEmitter<File> = new EventEmitter<File>();
+    @Output() onUpload: EventEmitter<InfoEspectador[]> = new EventEmitter<InfoEspectador[]>();
+    @ViewChild('fileUploadInput') private input: ElementRef<HTMLInputElement>;
 
     public onFileUpload($event: FileList | null): void {
         if($event && $event[0]) {
             const file = $event[0];
-            this.onUpload.emit(file);
+            this.lerArquivo(file)
+                .then(lista => {
+                    this.onUpload.emit(lista)
+                    this.input.nativeElement.value = '';
+                })
+                .catch((err) => {
+                    this.input.nativeElement.value = '';
+                })
+            ;
         }
+    }
+
+    private async lerArquivo(arquivo: File): Promise<InfoEspectador[]> {
+        return await this.readerUtil.lerLista(arquivo)
     }
 
 }

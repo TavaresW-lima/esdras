@@ -1,16 +1,19 @@
 import { NgModule } from "@angular/core";
 import { AutoFocusDirective } from './directives/autoFocus.directive';
 import { CommonModule } from '@angular/common';
+import { UploadFileOverlayDirective } from '../components/upload-file/upload-file-overlay/upload-file-overlay.directive';
 
 @NgModule({
     declarations: [
-        AutoFocusDirective
+        AutoFocusDirective,
+        UploadFileOverlayDirective
     ],
     imports: [
         CommonModule
     ],
     exports: [
-        AutoFocusDirective
+        AutoFocusDirective,
+        UploadFileOverlayDirective
     ]
 })
 export class SharedModule {

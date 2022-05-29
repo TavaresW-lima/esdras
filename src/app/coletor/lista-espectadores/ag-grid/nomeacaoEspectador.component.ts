@@ -28,7 +28,6 @@ export class NomeacaoEspectadorCellRenderer implements ICellRendererAngularComp 
     
     agInit(params: ICellRendererParams): void {
         this.data = params.data;
-        console.log(`${this.data.nome} é um ${this.data.tipo}`);
     }
     
     refresh(params: ICellRendererParams): boolean {

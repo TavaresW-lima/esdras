@@ -5,13 +5,11 @@ export class InfoEspectador {
         nome: string, 
         localidade: string, 
         nomeacao: TipoEspectador = 'MEMBRO BRASIL', 
-        exterior = false
     ) {
         this.id = InfoEspectador.ID_COUNTER;
         this.nome = nome;
         this.localidade = localidade;
         this.tipo = nomeacao;
-        this.exterior = exterior;
         InfoEspectador.ID_COUNTER++;
     }
 
@@ -19,7 +17,6 @@ export class InfoEspectador {
     nome: string | null;
     localidade?: string | null;
     tipo?: TipoEspectador;
-    exterior: boolean;
 }
 
 export type TipoEspectador = 'PASTOR' | 'MISSIONARIO' | 'MEMBRO BRASIL' | 'MEMBRO EXTERIOR';

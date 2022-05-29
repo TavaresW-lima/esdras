@@ -21,9 +21,11 @@ import pdfmake from 'pdfmake';
     FontAwesomeModule,
     NgbModule
   ],
-  providers: [{
-    provide: 'PDF_MAKE',
-    useValue: pdfmake
-  }],
+  providers: [
+    {
+      provide: 'PDF_MAKE',
+      useValue: pdfmake
+    }
+  ],
   bootstrap: [AppComponent]
 })export class AppModule { }

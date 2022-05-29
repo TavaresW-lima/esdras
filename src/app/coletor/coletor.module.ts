@@ -12,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalHeaderListaComponent } from './modal-header-lista/modal-header.lista.component';
 import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
+import { ModalConfirmacaoUpload } from './modal-confirmacao-upload/modal-confirmacao-upload.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { ComponentsModule } from '../components/components.module';
         ListaEspectadoresComponent,
         RemoveLineCellRenderer,
         NomeacaoEspectadorCellRenderer,
-        ModalHeaderListaComponent
+        ModalHeaderListaComponent,
+        ModalConfirmacaoUpload
     ],
     imports: [
         CommonModule,
