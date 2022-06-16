@@ -11,7 +11,7 @@ import { PDFUtilService } from '../shared/pdf/pdf-util-service.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalHeaderListaComponent } from './modal-header-lista/modal-header.lista.component';
 import { SharedModule } from '../shared/shared.module';
-import { ComponentsModule } from '../components/components.module';
+import { ComponentsModule } from '../ui/components.module';
 import { ModalConfirmacaoUpload } from './modal-confirmacao-upload/modal-confirmacao-upload.component';
 
 @NgModule({

@@ -79,20 +79,31 @@
             </div>
           </div>
 
-          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button 
-                type="submit" 
-                class="px-4 py-2 border cursor-pointer border-zinc-500 text-zinc-500 font-bold hover:border-sky-500 hover:text-sky-500 hover:bg-sky-100 
-                       active:text-sky-600 active:border-sky-600 disabled:text-zinc-400 disabled:border-zinc-400 disabled:cursor-not-allowed disabled:bg-transparent transition-colors"
-                (click)="returnHeader()"
-                [disabled]="formModalHeader.form.invalid"
-            >OK</button>
-            <button 
-                type="button" 
-                class="mx-2 px-4 py-2 border cursor-pointer border-zinc-500 text-zinc-500 font-bold hover:border-sky-500 hover:text-sky-500 hover:bg-sky-100 
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:justify-between sm:items-center">
+            <button
+                class="text-sm text-sky-500 px-2 py-1 cursor-pointer text-slate-50 rounded-full
+                       hover:text-white hover:bg-sky-500/75 
+                       active:text-sky-600 active:border-sky-600 transition-colors transition-opacity"
+                (click)="downloadTextFile()"
+            >
+                <fa-icon class="mr-1" [icon]="downloadIcon"></fa-icon>
+                <span>Baixar como arquivo de texto</span>
+            </button>
+            <div class="sm:flex sm:flex-row-reverse">
+                <button 
+                    type="submit" 
+                    class="px-4 py-2 border cursor-pointer border-zinc-500 text-zinc-500 font-bold hover:border-sky-500 hover:text-sky-500 hover:bg-sky-100 
                         active:text-sky-600 active:border-sky-600 disabled:text-zinc-400 disabled:border-zinc-400 disabled:cursor-not-allowed disabled:bg-transparent transition-colors"
-                (click)="activeModal.dismiss()"
-            >Cancelar</button>
+                    (click)="returnHeader()"
+                    [disabled]="formModalHeader.form.invalid"
+                >OK</button>
+                <button 
+                    type="button" 
+                    class="mx-2 px-4 py-2 border cursor-pointer border-zinc-500 text-zinc-500 font-bold hover:border-sky-500 hover:text-sky-500 hover:bg-sky-100 
+                            active:text-sky-600 active:border-sky-600 disabled:text-zinc-400 disabled:border-zinc-400 disabled:cursor-not-allowed disabled:bg-transparent transition-colors"
+                    (click)="activeModal.dismiss()"
+                >Cancelar</button>
+            </div>
           </div>
           </form>
         </div>

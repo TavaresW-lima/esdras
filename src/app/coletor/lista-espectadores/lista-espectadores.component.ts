@@ -14,6 +14,8 @@ import { ModalHeaderListaComponent } from '../modal-header-lista/modal-header.li
 import { DadosHeader } from '../modal-header-lista/dados-header';
 import { ModalConfirmacaoUpload } from '../modal-confirmacao-upload/modal-confirmacao-upload.component';
 import { PRINT_ORDER_STATE } from './ag-grid/sortStates';
+import { ExportAction } from '../modal-header-lista/export-action';
+import { ListaPlainTextUtilService } from '../../shared/services/lista-plain-text.util';
 
 @Component({
     selector: 'ui-lista-espectadores',
@@ -39,6 +41,7 @@ export class ListaEspectadoresComponent implements AgGridUser {
     constructor(
       private pdfUtilService: PDFUtilService,
       private modalService: NgbModal,
+      private plainTextUtil: ListaPlainTextUtilService
     ) {
       this.nomeFilter = '';
     }
@@ -57,24 +60,43 @@ export class ListaEspectadoresComponent implements AgGridUser {
       this.nomeListChange.emit(this.nomeList);
     }
 
-    public exportarPDF(): void {
+    public exportar(): void {
       let listaAExportar: InfoEspectador[] = [];
       this.gridApi.forEachNodeAfterFilterAndSort(node => listaAExportar.push(node.data));
-      const strategy = new ListaEspectadoresPDFStrategy(listaAExportar);
 
       this.modalService
           .open(ModalHeaderListaComponent)
           .result
-          .then((header: DadosHeader) => {
-            strategy.setDispositivosOnline(header.dispositivos);
-            strategy.setPessoasOnline(header.pessoas);
-            strategy.setPessoasTemplo(header.pessoasTemplo);
-            strategy.setHorarioDe(header.de);
-            strategy.setHorarioAte(header.ate);
-            this.pdfUtilService.setStrategy(strategy);
-            this.pdfUtilService.geraPDF().open();
+          .then((res: ExportAction) => {
+            if(res.action == 'PDF') {
+              this.abrePDF(res.content, listaAExportar);
+            } else {
+              this.downloadTXT(listaAExportar);
+            }
           })
           .catch(() => {});
+    }
+
+    private abrePDF(header: DadosHeader, lista: InfoEspectador[]) {
+      const strategy = new ListaEspectadoresPDFStrategy(lista);
+      strategy.setDispositivosOnline(header.dispositivos);
+      strategy.setPessoasOnline(header.pessoas);
+      strategy.setPessoasTemplo(header.pessoasTemplo);
+      strategy.setHorarioDe(header.de);
+      strategy.setHorarioAte(header.ate);
+      this.pdfUtilService.setStrategy(strategy);
+      this.pdfUtilService.geraPDF().open();
+    }
+
+    private downloadTXT(lista: InfoEspectador[]) {
+      const arquivo = this.plainTextUtil.getFileFromLista(lista);
+      const urlArquivo = URL.createObjectURL(arquivo);
+      const link: HTMLAnchorElement = document.createElement('a');
+      link.download = `Lista ${new Date().toLocaleDateString()}`;
+      link.href = urlArquivo;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
     public onListaUpload(lista: InfoEspectador[]) {
@@ -83,7 +105,6 @@ export class ListaEspectadoresComponent implements AgGridUser {
             .open(ModalConfirmacaoUpload)
             .result
             .then(() => {
-              this.nomeList = lista;
               this.nomeListChange.emit(this.nomeList);
             })
       } else {

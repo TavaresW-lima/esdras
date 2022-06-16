@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { InfoEspectador, TipoEspectador } from '../../model/info-espectador';
 
 @Injectable({providedIn: 'root'})
-export class ListaReaderUtilService {
+export class ListaPlainTextUtilService {
 
     constructor() {}
 
@@ -48,5 +48,25 @@ export class ListaReaderUtilService {
         }
 
         return espectadorList;
+    }
+
+    public getFileFromLista(espectadores: InfoEspectador[], separator: string = ';'): Blob {
+        let finalString = '';
+        const grupoPastores = espectadores.filter(espectador => espectador.tipo == 'PASTOR');
+        const grupoMissionarios = espectadores.filter(espectador => espectador.tipo == 'MISSIONARIO');
+        const grupoExterior = espectadores.filter(espectador => espectador.tipo == 'MEMBRO EXTERIOR');
+        const grupoBrasil = espectadores.filter(espectador => espectador.tipo == 'MEMBRO BRASIL') ;
+
+        finalString = finalString.concat('PASTORES\r\n');
+        finalString = finalString.concat(...grupoPastores.map(espec => `${espec.nome}${separator} ${espec.localidade}\r\n`));
+        finalString = finalString.concat('MISSIONÁRIOS\r\n');
+        finalString = finalString.concat(...grupoMissionarios.map(espec => `${espec.nome}${separator} ${espec.localidade}\r\n`));
+        finalString = finalString.concat('EXTERIOR\r\n');
+        finalString = finalString.concat(...grupoExterior.map(espec => `${espec.nome}${separator} ${espec.localidade}\r\n`));
+        finalString = finalString.concat('BRASIL\r\n');
+        finalString = finalString.concat(...grupoBrasil.map(espec => `${espec.nome}${separator} ${espec.localidade}\r\n`));
+
+        let blob = new Blob([finalString], {type: 'text/plain'});
+        return blob;
     }
 }

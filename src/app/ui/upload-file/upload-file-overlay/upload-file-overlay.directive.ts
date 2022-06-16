@@ -1,6 +1,6 @@
 import { Directive, HostListener, Output, ElementRef, EventEmitter, Renderer2, OnDestroy } from '@angular/core';
 import { InfoEspectador } from '../../../model/info-espectador';
-import { ListaReaderUtilService } from '../../../coletor/lista-espectadores/lista-reader.util';
+import { ListaPlainTextUtilService } from '../../../shared/services/lista-plain-text.util';
 
 @Directive({
     selector: '[appFileUploadOverlay]'
@@ -12,7 +12,7 @@ export class UploadFileOverlayDirective implements OnDestroy {
     
     constructor(
         public el: ElementRef<HTMLDivElement>,
-        public readerUtil: ListaReaderUtilService,
+        public readerUtil: ListaPlainTextUtilService,
         public renderer: Renderer2
     ) {
         renderer.listen(window, 'drop', (event) => event.preventDefault());
@@ -27,13 +27,17 @@ export class UploadFileOverlayDirective implements OnDestroy {
     }
 
     @HostListener('dragenter', ["$event"])
-    dragEnterOverlay(event: any) {
-        this.renderer.appendChild(this.el.nativeElement, this.dropAreaEl);
+    dragEnterOverlay(event: DragEvent) {
+        if(event.dataTransfer && event.dataTransfer.files.length > 0) {
+            this.renderer.appendChild(this.el.nativeElement, this.dropAreaEl);
+        }
         event.preventDefault();
     }
 
-    dragLeaveOverlay = (event:any) => {
-        this.renderer.removeChild(this.el.nativeElement, this.dropAreaEl, true);
+    dragLeaveOverlay = (event:DragEvent) => {
+        if(event.dataTransfer && event.dataTransfer.files.length > 0) {
+            this.renderer.removeChild(this.el.nativeElement, this.dropAreaEl, true);
+        }
         event.preventDefault();
     }
 
@@ -41,8 +45,10 @@ export class UploadFileOverlayDirective implements OnDestroy {
     drop = (event: DragEvent) => {
         event.stopImmediatePropagation();
         event.preventDefault();
-        const files =  event.dataTransfer?.files;
-        this.onFileUpload(files);        
+        if(event.dataTransfer) {
+            const files =  event.dataTransfer.files;
+            this.onFileUpload(files);        
+        }
     }
 
     private onFileUpload(files: FileList | undefined): void {

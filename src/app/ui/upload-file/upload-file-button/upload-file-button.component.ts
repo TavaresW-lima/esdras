@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { InfoEspectador } from 'src/app/model/info-espectador';
-import { ListaReaderUtilService } from '../../../coletor/lista-espectadores/lista-reader.util';
+import { ListaPlainTextUtilService } from '../../../shared/services/lista-plain-text.util';
 
 @Component({
     selector: 'ui-upload-file-button',
@@ -29,7 +29,7 @@ export class UploadFileButton {
     public upload = faFileUpload;
 
     constructor(
-        private readerUtil: ListaReaderUtilService
+        private readerUtil: ListaPlainTextUtilService
     ) {}
 
     @Input() accept: string = 'text/plain';

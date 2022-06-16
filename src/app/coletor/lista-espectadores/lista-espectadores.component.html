@@ -10,17 +10,19 @@
                 <button 
                     class="text-sm px-2 ml-2 py-1 cursor-pointer border border-slate-50 text-slate-50
                            hover:border-sky-500 hover:text-sky-500 hover:bg-white/5 
-                           active:text-sky-600 active:border-sky-600 transition-colors"
-                    (click)="exportarPDF()"
+                           active:text-sky-600 active:border-sky-600 transition-colors
+                           disabled:text-slate-50/50 disabled:border-slate-50/50 disabled:cursor-not-allowed disabled:bg-transparent"
+                    (click)="exportar()"
+                    [disabled]="nomeList.length == 0"
                 >
                     <fa-icon [icon]="pdf"></fa-icon>
                     Exportar Lista
                 </button>
                 <button
-                class="text-sm px-1 ml-2 cursor-pointer text-slate-50 rounded-full
-                       hover:border-sky-500 hover:text-sky-500 hover:bg-white/5 
-                       active:text-sky-600 active:border-sky-600 transition-colors transition-opacity"
-                (click)="toggleSort()"
+                    class="text-sm px-1 ml-2 cursor-pointer text-slate-50 rounded-full
+                        hover:border-sky-500 hover:text-sky-500 hover:bg-white/5 
+                        active:text-sky-600 active:border-sky-600 transition-colors transition-opacity"
+                    (click)="toggleSort()"
                 >
                     <fa-icon class="mr-1" [icon]="sort"></fa-icon>
                     <ng-container [ngSwitch]="printOrderSorting">
