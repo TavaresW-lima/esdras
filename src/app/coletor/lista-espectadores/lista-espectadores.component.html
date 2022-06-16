@@ -1,7 +1,7 @@
 <ng-container *ngIf="nomeList">
     <div appFileUploadOverlay (onUpload)="onListaUpload($event)">        
         <div class="w-full flex items-end justify-between">
-            <div class="flex items-end w-1/2 justify-start">
+            <div class="flex items-center w-1/2 justify-start">
                 <ui-upload-file-button
                     (onUpload)="onListaUpload($event)"
                 >
@@ -15,6 +15,18 @@
                 >
                     <fa-icon [icon]="pdf"></fa-icon>
                     Exportar Lista
+                </button>
+                <button
+                class="text-sm px-1 ml-2 cursor-pointer text-slate-50 rounded-full
+                       hover:border-sky-500 hover:text-sky-500 hover:bg-white/5 
+                       active:text-sky-600 active:border-sky-600 transition-colors transition-opacity"
+                (click)="toggleSort()"
+                >
+                    <fa-icon class="mr-1" [icon]="sort"></fa-icon>
+                    <ng-container [ngSwitch]="printOrderSorting">
+                        <span *ngSwitchCase="false">Ordem de inserção</span>
+                        <span *ngSwitchCase="true">Ordem de impressão</span>
+                    </ng-container>
                 </button>
             </div>
             <div class="flex items-end w-1/2 justify-end">

@@ -23,7 +23,7 @@ export class ColetorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public setNomeacao(selecionado: boolean, nomeacao: TipoEspectador) {
+  setNomeacao(selecionado: boolean, nomeacao: TipoEspectador) {
     if(selecionado) {
       this.form.tipo = nomeacao;
     } else {

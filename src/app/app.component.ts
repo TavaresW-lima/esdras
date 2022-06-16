@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'esdras';
+  faHeart = faHeart;
+  faHeartSolid = faHeartSolid;
 }

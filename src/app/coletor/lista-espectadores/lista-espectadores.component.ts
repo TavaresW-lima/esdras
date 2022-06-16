@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ColDef, ColumnApi, GetRowIdParams, GridApi, GridOptions, GridReadyEvent, RowNode } from 'ag-grid-community';
+import { Component, EventEmitter, Input, Output} from '@angular/core';
+import { ColDef, ColumnApi, ColumnState, GetRowIdParams, GridApi, GridReadyEvent, RowNode } from 'ag-grid-community';
 import { AgGridUser } from '../../model/base/ag-grid-user';
 import { InfoEspectador, TipoEspectador } from '../../model/info-espectador';
 import { RemoveLineCellRenderer } from './ag-grid/removeLineCellRenderer.component';
@@ -7,14 +7,13 @@ import { NomeacaoEspectadorCellRenderer } from './ag-grid/nomeacaoEspectador.com
 
 import { PDFUtilService } from '../../shared/pdf/pdf-util-service.service';
 
-import { faFilePdf } from '@fortawesome/free-regular-svg-icons';
+import { faSearch, faFilePdf, faSortAmountDown } from '@fortawesome/free-solid-svg-icons';
 import { ListaEspectadoresPDFStrategy } from './lista-espectadores-pdf-strategy';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalHeaderListaComponent } from '../modal-header-lista/modal-header.lista.component';
 import { DadosHeader } from '../modal-header-lista/dados-header';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { ListaReaderUtilService } from './lista-reader.util';
 import { ModalConfirmacaoUpload } from '../modal-confirmacao-upload/modal-confirmacao-upload.component';
+import { PRINT_ORDER_STATE } from './ag-grid/sortStates';
 
 @Component({
     selector: 'ui-lista-espectadores',
@@ -22,11 +21,11 @@ import { ModalConfirmacaoUpload } from '../modal-confirmacao-upload/modal-confir
 })
 export class ListaEspectadoresComponent implements AgGridUser {
     @Input() nomeList: InfoEspectador[] = [];
-
 		@Output() nomeListChange: EventEmitter<InfoEspectador[]> = new EventEmitter<InfoEspectador[]>();
 
     public pdf = faFilePdf;
     public searchLens = faSearch;
+    public sort = faSortAmountDown;
 
 		public gridContext = this;
     public columnDefs: ColDef[] = colDef;
@@ -34,6 +33,8 @@ export class ListaEspectadoresComponent implements AgGridUser {
     public columnApi: ColumnApi;
 		public getRowId = (params: GetRowIdParams) => params.data.id;
     public nomeFilter: string = '';
+
+    public printOrderSorting: boolean = true;
 
     constructor(
       private pdfUtilService: PDFUtilService,
@@ -45,7 +46,7 @@ export class ListaEspectadoresComponent implements AgGridUser {
     public onGridReady($event: GridReadyEvent) {
         this.gridApi = $event.api;
         this.columnApi = $event.columnApi;
-        this.setDefaultSorting();
+        this.setSortState(PRINT_ORDER_STATE);
     }
 
     public removeLine(id: number) {
@@ -83,10 +84,11 @@ export class ListaEspectadoresComponent implements AgGridUser {
             .result
             .then(() => {
               this.nomeList = lista;
-              this.setDefaultSorting();
+              this.nomeListChange.emit(this.nomeList);
             })
       } else {
         this.nomeList = lista;
+        this.nomeListChange.emit(this.nomeList);
       }
     }
 
@@ -102,21 +104,26 @@ export class ListaEspectadoresComponent implements AgGridUser {
     public doesExternalFilterPass = (node: RowNode): boolean => {
       const espectador: InfoEspectador = node.data;
       if(espectador.nome) {
-
         return espectador.nome.toLowerCase().includes(this.nomeFilter.toLowerCase());
       } else {
         return false;
       }
     }
 
-    public setDefaultSorting(): void {
+    public setSortState( state: ColumnState[]): void {
       this.columnApi.applyColumnState({
-        state: [
-          {colId: 'tipo', sort: 'asc'},
-          {colId: 'localidade', sort: 'asc'}
-        ],
-        defaultState: {sort: null}
+        state, defaultState: {sort: null}
       })
+    }
+
+    public toggleSort(): void {
+      if(this.printOrderSorting) {
+        this.columnApi.resetColumnState();
+        this.printOrderSorting = false;
+      } else {
+        this.setSortState(PRINT_ORDER_STATE);
+        this.printOrderSorting = true;
+      }
     }
 }
 
@@ -125,7 +132,6 @@ const colDef: ColDef[] = [
     colId: 'tipo',
     cellRenderer: NomeacaoEspectadorCellRenderer,
     width: 50,
-    sortable: true,
     comparator: (vA, vB, nodeA, nodeB, isInverted) => {
       const pesoTipoMap = new Map<TipoEspectador, number>([
         ['PASTOR', 0],
@@ -155,8 +161,7 @@ const colDef: ColDef[] = [
     headerName: 'Localidade',
     field: 'localidade',
     flex: 1,
-    editable: true,
-    sortable: true
+    editable: true
   },
   {
     cellRenderer: RemoveLineCellRenderer,
