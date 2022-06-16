@@ -2,14 +2,23 @@
     <div appFileUploadOverlay (onUpload)="onListaUpload($event)">        
         <div class="w-full flex items-end justify-between">
             <div class="flex items-end w-1/2 justify-start">
-            <ui-upload-file-button
-                (onUpload)="onListaUpload($event)"
-            >
-                Enviar Lista
-            </ui-upload-file-button>
+                <ui-upload-file-button
+                    (onUpload)="onListaUpload($event)"
+                >
+                    Enviar Lista
+                </ui-upload-file-button>
+                <button 
+                    class="text-sm px-2 ml-2 py-1 cursor-pointer border border-slate-50 text-slate-50
+                           hover:border-sky-500 hover:text-sky-500 hover:bg-white/5 
+                           active:text-sky-600 active:border-sky-600 transition-colors"
+                    (click)="exportarPDF()"
+                >
+                    <fa-icon [icon]="pdf"></fa-icon>
+                    Exportar Lista
+                </button>
             </div>
             <div class="flex items-end w-1/2 justify-end">
-                <div class="mr-4 w-3/5">
+                <div class="w-3/5">
                     <label class="flex items-center relative text-slate-50" for="nomeSearch">
                         <fa-icon
                             class="absolute left-px text-slate-50" 
@@ -19,7 +28,7 @@
                             [ngModel]="nomeFilter"
                             (ngModelChange)="onFilterChange($event)"
                             class="bg-transparent mt-0 w-full pt-0 pb-1 pl-5 border-0 border-b-2 border-slate-50 text-slate-50
-                                   focus:border-b-3 focus:border-sky-500 focus:ring-0"
+                                   focus:border-b-3 focus:border-sky-500 focus:ring-0 transition-colors"
                             type="text" 
                             name="nomeSearch" 
                             id="nome"
@@ -28,15 +37,6 @@
                         />
                     </label>
                 </div>
-                <button 
-                    class="text-sm px-2 py-1 cursor-pointer border border-slate-50 text-slate-50
-                           hover:border-sky-500 hover:text-sky-500 hover:bg-slate-50 
-                           active:text-sky-600 active:border-sky-600"
-                    (click)="exportarPDF()"
-                >
-                    <fa-icon [icon]="pdf"></fa-icon>
-                    Exportar Lista
-                </button>
             </div>
         </div>
         <ag-grid-angular

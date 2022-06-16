@@ -38,7 +38,6 @@ export class ListaEspectadoresComponent implements AgGridUser {
     constructor(
       private pdfUtilService: PDFUtilService,
       private modalService: NgbModal,
-      private readerService: ListaReaderUtilService
     ) {
       this.nomeFilter = '';
     }
@@ -46,6 +45,7 @@ export class ListaEspectadoresComponent implements AgGridUser {
     public onGridReady($event: GridReadyEvent) {
         this.gridApi = $event.api;
         this.columnApi = $event.columnApi;
+        this.setDefaultSorting();
     }
 
     public removeLine(id: number) {
@@ -83,6 +83,7 @@ export class ListaEspectadoresComponent implements AgGridUser {
             .result
             .then(() => {
               this.nomeList = lista;
+              this.setDefaultSorting();
             })
       } else {
         this.nomeList = lista;
@@ -107,14 +108,24 @@ export class ListaEspectadoresComponent implements AgGridUser {
         return false;
       }
     }
+
+    public setDefaultSorting(): void {
+      this.columnApi.applyColumnState({
+        state: [
+          {colId: 'tipo', sort: 'asc'},
+          {colId: 'localidade', sort: 'asc'}
+        ],
+        defaultState: {sort: null}
+      })
+    }
 }
 
 const colDef: ColDef[] = [
   {
+    colId: 'tipo',
     cellRenderer: NomeacaoEspectadorCellRenderer,
     width: 50,
     sortable: true,
-    sort: 'asc',
     comparator: (vA, vB, nodeA, nodeB, isInverted) => {
       const pesoTipoMap = new Map<TipoEspectador, number>([
         ['PASTOR', 0],
@@ -133,16 +144,19 @@ const colDef: ColDef[] = [
     }
   },
   {
+    colId: 'nome',
     headerName: 'Nome',
     field: 'nome',
     flex: 2,
     editable: true
   },
   {
+    colId: 'localidade',
     headerName: 'Localidade',
     field: 'localidade',
     flex: 1,
-    editable: true
+    editable: true,
+    sortable: true
   },
   {
     cellRenderer: RemoveLineCellRenderer,

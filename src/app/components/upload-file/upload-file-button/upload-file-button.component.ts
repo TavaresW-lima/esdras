@@ -16,8 +16,8 @@ import { ListaReaderUtilService } from '../../../coletor/lista-espectadores/list
         />
         <button 
             class="text-sm px-2 py-1 cursor-pointer border border-slate-50 text-slate-50
-                   hover:border-sky-500 hover:text-sky-500 hover:bg-slate-50 
-                   active:text-sky-600 active:border-sky-600"
+                   hover:border-sky-500 hover:text-sky-500 hover:bg-white/5 
+                   active:text-sky-600 active:border-sky-600 transition-colors"
             (click)="fileUploadInput.click()"
         >
             <fa-icon [icon]="upload"></fa-icon>
