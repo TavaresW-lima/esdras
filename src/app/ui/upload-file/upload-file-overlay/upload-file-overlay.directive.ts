@@ -28,14 +28,14 @@ export class UploadFileOverlayDirective implements OnDestroy {
 
     @HostListener('dragenter', ["$event"])
     dragEnterOverlay(event: DragEvent) {
-        if(event.dataTransfer && event.dataTransfer.files.length > 0) {
+        if(event.dataTransfer && event.dataTransfer) {
             this.renderer.appendChild(this.el.nativeElement, this.dropAreaEl);
         }
         event.preventDefault();
     }
 
     dragLeaveOverlay = (event:DragEvent) => {
-        if(event.dataTransfer && event.dataTransfer.files.length > 0) {
+        if(event.dataTransfer && event.dataTransfer) {
             this.renderer.removeChild(this.el.nativeElement, this.dropAreaEl, true);
         }
         event.preventDefault();
@@ -47,7 +47,11 @@ export class UploadFileOverlayDirective implements OnDestroy {
         event.preventDefault();
         if(event.dataTransfer) {
             const files =  event.dataTransfer.files;
-            this.onFileUpload(files);        
+            if(files.length == 0) {
+                this.renderer.removeChild(this.el.nativeElement, this.dropAreaEl, true);
+            } else {
+                this.onFileUpload(files);        
+            }
         }
     }
 

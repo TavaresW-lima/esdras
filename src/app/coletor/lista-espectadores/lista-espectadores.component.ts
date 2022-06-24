@@ -182,16 +182,15 @@ const colDef: ColDef[] = [
     colId: 'localidade',
     headerName: 'Localidade',
     field: 'localidade',
-    comparator: (vA: string, vB: string, nodeA, nodeB, isInverted) => {
-      if(vA == undefined) vA = '';
-      if(vB == undefined) vB = '';
+    comparator: (vA: string, vB: string) => {
+      if(!vA) return 1;
+      if(!vB) return -1;
 
       const [l1, l2] = [vA.split(LOCALIDADE_SEPARATOR), vB.split(LOCALIDADE_SEPARATOR)];
 
-      if(l1.length == 1 || l2.length == 1) {
-        return vA.localeCompare(vB);
-      }
-
+      if(l1.length == 1 || l2.length == 1) return vA.localeCompare(vB);
+      if(l1[1] == l2[1]) return vA.localeCompare(vB);
+      
       return l1[1].localeCompare(l2[1]);
     },
     flex: 1,

@@ -22,7 +22,7 @@
                 <button
                     class="text-sm px-1 ml-2 cursor-pointer text-slate-50 rounded-full
                         hover:border-sky-500 hover:text-sky-500 hover:bg-white/5 
-                        active:text-sky-600 active:border-sky-600 transition-colors transition-opacity"
+                        active:text-sky-600 active:border-sky-600 transition-colors"
                     (click)="toggleSort()"
                 >
                     <fa-icon class="mr-1" [icon]="sort"></fa-icon>
@@ -34,16 +34,18 @@
             </div>
             <div class="flex items-end w-1/2 justify-end">
                 <div class="w-3/5">
-                    <label class="flex items-center relative text-slate-50" for="nomeSearch">
+                    <label class="group flex items-center relative text-slate-50" for="nomeSearch">
                         <fa-icon
-                            class="absolute left-px text-slate-50" 
+                            class="absolute left-px text-slate-50/50 group-focus-within:text-slate-50 transition-colors" 
                             [icon]="searchLens"
                         ></fa-icon>
                         <input
                             [ngModel]="nomeFilter"
                             (ngModelChange)="onFilterChange($event)"
                             class="bg-transparent mt-0 w-full pt-0 pb-1 pl-5 border-0 border-b-2 border-slate-50 text-slate-50
-                                   focus:border-b-3 focus:border-sky-500 focus:ring-0 transition-colors"
+                                   focus:border-b-3 focus:border-sky-500 focus:ring-0 placeholder:text-slate-50
+                                   group-focus-within:placeholder:text-slate-50/50
+                                   transition-colors"
                             type="text" 
                             name="nomeSearch" 
                             id="nome"

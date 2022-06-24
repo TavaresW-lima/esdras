@@ -13,6 +13,8 @@ export class ColetorComponent {
   public nomeList: InfoEspectador[] = [];
 
   public form: Partial<InfoEspectador> = {
+    nome: null,
+    localidade: null,
     tipo: 'MEMBRO BRASIL'
   }
  
@@ -27,7 +29,8 @@ export class ColetorComponent {
   }
 
   add() {
-    if(this.form.nome && this.form.localidade) {
+    if(this.form.nome) {
+      if(!this.form.localidade) this.form.localidade = ''
       const espectador: InfoEspectador = new InfoEspectador(this.form.nome, this.form.localidade, this.form.tipo);
       this.nomeList = this.nomeList.concat([espectador]);
     }

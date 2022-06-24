@@ -10,7 +10,6 @@ export class LocalidadeValidatorDirective implements Validator {
     validate(control: AbstractControl): ValidationErrors | null {
         const regexCaracteresNaoPermitidos = new RegExp('[\\/]$|[\\d]', 'g');
         const temCaracteresInvalidos = regexCaracteresNaoPermitidos.test(control.value);
-        console.log(temCaracteresInvalidos);
         return temCaracteresInvalidos 
                 ? {localidadeInvalida: control.value}
                 : null

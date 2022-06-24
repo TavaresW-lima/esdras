@@ -1463,7 +1463,7 @@
     "node-gyp" "^8.2.0"
     "read-package-json-fast" "^2.0.1"
 
-"@popperjs/core@^2.10.2":
+"@popperjs/core@^2.10.2", "@popperjs/core@^2.11.5":
   "integrity" "sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw=="
   "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz"
   "version" "2.11.5"
