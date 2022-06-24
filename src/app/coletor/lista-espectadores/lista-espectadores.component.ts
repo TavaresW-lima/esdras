@@ -16,6 +16,7 @@ import { ModalConfirmacaoUpload } from '../modal-confirmacao-upload/modal-confir
 import { PRINT_ORDER_STATE } from './ag-grid/sortStates';
 import { ExportAction } from '../modal-header-lista/export-action';
 import { ListaPlainTextUtilService } from '../../shared/services/lista-plain-text.util';
+import { LOCALIDADE_SEPARATOR } from '../../shared/constants';
 
 @Component({
     selector: 'ui-lista-espectadores',
@@ -181,6 +182,18 @@ const colDef: ColDef[] = [
     colId: 'localidade',
     headerName: 'Localidade',
     field: 'localidade',
+    comparator: (vA: string, vB: string, nodeA, nodeB, isInverted) => {
+      if(vA == undefined) vA = '';
+      if(vB == undefined) vB = '';
+
+      const [l1, l2] = [vA.split(LOCALIDADE_SEPARATOR), vB.split(LOCALIDADE_SEPARATOR)];
+
+      if(l1.length == 1 || l2.length == 1) {
+        return vA.localeCompare(vB);
+      }
+
+      return l1[1].localeCompare(l2[1]);
+    },
     flex: 1,
     editable: true
   },

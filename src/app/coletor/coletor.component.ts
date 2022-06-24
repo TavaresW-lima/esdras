@@ -6,22 +6,17 @@ import { InfoEspectador, TipoEspectador } from '../model/info-espectador';
   templateUrl: './coletor.component.html',
   styleUrls: ['./coletor.component.scss']
 })
-export class ColetorComponent implements OnInit {
+export class ColetorComponent {
 
   @ViewChild('inputNome') public inputNome: ElementRef<HTMLInputElement>;
 
   public nomeList: InfoEspectador[] = [];
 
   public form: Partial<InfoEspectador> = {
-    localidade: null,
-    nome: null,
     tipo: 'MEMBRO BRASIL'
   }
  
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   setNomeacao(selecionado: boolean, nomeacao: TipoEspectador) {
     if(selecionado) {
