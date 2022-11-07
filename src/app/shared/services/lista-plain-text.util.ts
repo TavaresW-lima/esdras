@@ -33,10 +33,10 @@ export class ListaPlainTextUtilService {
                 case 'MISSIONÁRIOS': 
                     marcadorAtual = 'MISSIONARIO';
                     break;
-                case 'IRMÃOS NO EXTERIOR':
+                case 'EXTERIOR':
                     marcadorAtual = 'MEMBRO EXTERIOR';
                     break;
-                case 'IRMÃOS NO BRASIL':
+                case 'BRASIL':
                     marcadorAtual = 'MEMBRO BRASIL';
                     break;
                 default:

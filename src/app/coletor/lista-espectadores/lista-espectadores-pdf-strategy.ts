@@ -101,16 +101,23 @@ export class ListaEspectadoresPDFStrategy implements PdfMakingStrategy {
                 headerRows: 1,
                 body: [
                     [{text:'Nome',fontSize: 13, bold: true},{text:'Localidade',fontSize: 13, bold: true}],
-                    [{text:'Pastores', fontSize: 13, bold: true, alignment: 'center', colSpan: 2}, {}],
-                    ...pastores.map(pastor => [{text: pastor.nome, alignment: 'left'},{text: pastor.localidade, alignment: 'left'}]),
-                    [{text:'Missionários', fontSize: 13, bold: true, alignment: 'center', colSpan: 2}, {}],
-                    ...missionarios.map(miss => [{text: miss.nome, alignment: 'left'},{text: miss.localidade, alignment: 'left'}]),
-                    [{text:'Irmãos no Exterior', fontSize: 13, bold: true, alignment: 'center', colSpan: 2}, {}],
-                    ...exterior.map(membro => [{text: membro.nome, alignment: 'left'},{text: membro.localidade, alignment: 'left'}]),
-                    [{text:'Irmãos no Brasil', fontSize: 13, bold: true, alignment: 'center', colSpan: 2}, {}],
-                    ...brasil.map(membro => [{text: membro.nome, alignment: 'left'},{text: membro.localidade, alignment: 'left'}])
+                    ...this.getSubLista('Pastores', pastores),
+                    ...this.getSubLista('Missionários', missionarios),
+                    ...this.getSubLista('Irmãos no Exterior', exterior),
+                    ...this.getSubLista('Irmãos no Brasil', brasil),
                 ]
             }
+        }
+    }
+
+    private getSubLista(title: string, list: InfoEspectador[]) {
+        if(list.length > 0) {
+            const titleLine = [{text: title, fontSize: 13, bold: true, alignment: 'center', colSpan: 2}, {}];
+            const otherLines = list.map(person => [{text: person.nome, alignment: 'left'},{text: person.localidade, alignment: 'left'}]);
+            const response = [titleLine, ...otherLines];
+            return response;
+        } else {
+            return [];
         }
     }
 

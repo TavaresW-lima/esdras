@@ -1,4 +1,4 @@
-import { Content, DynamicContent } from 'pdfmake/interfaces';
+import { Content } from 'pdfmake/interfaces';
 export interface PdfMakingStrategy {
     getContent(): Content;
     getHeader(currPage?: number, pageCount?: number): Content;
