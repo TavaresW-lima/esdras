@@ -76,14 +76,14 @@ export class ListaEspectadoresPDFStrategy implements PdfMakingStrategy {
                     color: '#3410a7', 
                     bold: true,
                     alignment: 'left',
+                },
+                {
+                    text: `Número Aproximado de pessoas (TEMPLO): ${this.pessoasTemplo}`,
+                    fontSize: 16,
+                    color: '#3410a7', 
+                    bold: true,
+                    alignment: 'left',
                 }
-//                 {
-//                     text: `Número Aproximado de pessoas (TEMPLO): ${this.pessoasTemplo}`,
-//                     fontSize: 16,
-//                     color: '#3410a7', 
-//                     bold: true,
-//                     alignment: 'left',
-//                 }
             ]
         }]
     }
